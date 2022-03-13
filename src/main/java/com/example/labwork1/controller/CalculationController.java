@@ -4,38 +4,79 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.labwork1.entities.Calculation;
+import com.example.labwork1.controller.CustomException;
 
 @RestController
 
 public class CalculationController {
+    private static boolean isInt(String s){
+        try{
+            Integer.parseInt(s);
+            return true;
+
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
+    }
    @GetMapping("/simplecalculation")
-   Calculation simpleCalculation (@RequestParam (value = "number", defaultValue = "0") String number,
+   public int simpleCalculation (@RequestParam (value = "number", defaultValue = "0") String number,
                                   @RequestParam (value = "firstOption", defaultValue = "0")String firstOption,
                                   @RequestParam (value = "secondOption", defaultValue = "0") String secondOption,
-                                  @RequestParam (value = "thirstOption", defaultValue = "0") String thirstOption,
-                                  @RequestParam (value = "fourthOption", defaultValue = "0") String fourthOption)
+                                  @RequestParam (value = "thirdOption", defaultValue = "0") String thirdOption,
+                                  @RequestParam (value = "fourthOption", defaultValue = "0") String fourthOption) throws CustomException
    {
        int result = 0;
        int sum = 0;
-        if (Integer.parseInt(firstOption)== -1)
-        {
-            sum += Integer.parseInt(firstOption);
-        }
-        if (Integer.parseInt(secondOption)== -10)
-        {
-            sum  += Integer.parseInt(secondOption);
-        }
-        if (Integer.parseInt(thirstOption)== 1)
-        {
-            sum +=  Integer.parseInt(thirstOption);
-        }
-        if (Integer.parseInt(fourthOption)== 10)
-        {
-            sum +=  Integer.parseInt(fourthOption);
-        }
-        result = Integer.parseInt(number) + sum;
+       int numberInt =0;
+       if (isInt(number)) {
+           numberInt = Integer.parseInt(number);
+       } else {
+           throw new CustomException();
+       }
+       int firstOptionInt = 0, secondOptionInt = 0, thirstOptionInt = 0, fourthOptionInt = 0;
 
-        return new Calculation(result);
+       if ( (isInt(firstOption)) && ((Integer.parseInt(firstOption) == -1 ) || (Integer.parseInt(firstOption) == 0 ))) {
+           sum  += Integer.parseInt(firstOption);
+       } else {
+           throw new CustomException();
+       }
+       if ( (isInt(secondOption)) && ((Integer.parseInt(secondOption) == -10 )|| (Integer.parseInt(secondOption) == 0 ))) {
+           sum  += Integer.parseInt(secondOption);
+       } else {
+           throw new CustomException();
+       }
+       if ( (isInt(thirdOption)) && ((Integer.parseInt(thirdOption) == 1 ) || (Integer.parseInt(thirdOption) == 0 ))) {
+           sum += Integer.parseInt(thirdOption);
+       } else {
+           throw new CustomException();
+       }
+       if ( (isInt(fourthOption)) && ((Integer.parseInt(fourthOption) == 10 ) || (Integer.parseInt(fourthOption) == 0 ))) {
+           sum += Integer.parseInt(fourthOption);
+       } else {
+           throw new CustomException();
+       }
+       result = numberInt + sum;
+//        if (Integer.parseInt(firstOption)== -1)
+//        {
+//            sum += Integer.parseInt(firstOption);
+//        }
+//        if (Integer.parseInt(secondOption)== -10)
+//        {
+//            sum  += Integer.parseInt(secondOption);
+//        }
+//        if (Integer.parseInt(thirdOption)== 1)
+//        {
+//            sum +=  Integer.parseInt(thirstOption);
+//        }
+//        if (Integer.parseInt(fourthOption)== 10)
+//        {
+//            sum +=  Integer.parseInt(fourthOption);
+//        }
+//        result = Integer.parseInt(number) + sum;
+
+        //return new Calculation(result);
+       return result;
    }
 
 }
