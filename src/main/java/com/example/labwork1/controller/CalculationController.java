@@ -23,7 +23,7 @@ public class CalculationController {
        if (InputValidation.isInt(number)) {
            numberInt = Integer.parseInt(number);
        } else {
-           throw new CustomException("BAD REQUEST: incorrect input");
+           throw new CustomException("BAD REQUEST ERROR 400: incorrect input");
        }
        int firstOptionInt = 0, secondOptionInt = 0, thirstOptionInt = 0, fourthOptionInt = 0;
        sum = InputValidation.optionsValidation(firstOption, secondOption, thirdOption, fourthOption);
