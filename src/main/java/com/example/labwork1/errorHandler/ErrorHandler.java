@@ -1,4 +1,4 @@
-package com.example.labwork1.advice;
+package com.example.labwork1.errorHandler;
 
 
 import com.example.labwork1.exception.CustomException;
