@@ -3,8 +3,7 @@ package com.example.labwork1.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.labwork1.entities.Calculation;
-import com.example.labwork1.controller.CustomException;
+import com.example.labwork1.exception.CustomException;
 
 @RestController
 
@@ -32,50 +31,31 @@ public class CalculationController {
        if (isInt(number)) {
            numberInt = Integer.parseInt(number);
        } else {
-           throw new CustomException();
+           throw new CustomException("BAD REQUEST");
        }
        int firstOptionInt = 0, secondOptionInt = 0, thirstOptionInt = 0, fourthOptionInt = 0;
 
        if ( (isInt(firstOption)) && ((Integer.parseInt(firstOption) == -1 ) || (Integer.parseInt(firstOption) == 0 ))) {
            sum  += Integer.parseInt(firstOption);
        } else {
-           throw new CustomException();
+           throw new CustomException("BAD REQUEST");
        }
        if ( (isInt(secondOption)) && ((Integer.parseInt(secondOption) == -10 )|| (Integer.parseInt(secondOption) == 0 ))) {
            sum  += Integer.parseInt(secondOption);
        } else {
-           throw new CustomException();
+           throw new CustomException("BAD REQUEST");
        }
        if ( (isInt(thirdOption)) && ((Integer.parseInt(thirdOption) == 1 ) || (Integer.parseInt(thirdOption) == 0 ))) {
            sum += Integer.parseInt(thirdOption);
        } else {
-           throw new CustomException();
+           throw new CustomException("BAD REQUEST");
        }
        if ( (isInt(fourthOption)) && ((Integer.parseInt(fourthOption) == 10 ) || (Integer.parseInt(fourthOption) == 0 ))) {
            sum += Integer.parseInt(fourthOption);
        } else {
-           throw new CustomException();
+           throw new CustomException("BAD REQUEST");
        }
        result = numberInt + sum;
-//        if (Integer.parseInt(firstOption)== -1)
-//        {
-//            sum += Integer.parseInt(firstOption);
-//        }
-//        if (Integer.parseInt(secondOption)== -10)
-//        {
-//            sum  += Integer.parseInt(secondOption);
-//        }
-//        if (Integer.parseInt(thirdOption)== 1)
-//        {
-//            sum +=  Integer.parseInt(thirstOption);
-//        }
-//        if (Integer.parseInt(fourthOption)== 10)
-//        {
-//            sum +=  Integer.parseInt(fourthOption);
-//        }
-//        result = Integer.parseInt(number) + sum;
-
-        //return new Calculation(result);
        return result;
    }
 

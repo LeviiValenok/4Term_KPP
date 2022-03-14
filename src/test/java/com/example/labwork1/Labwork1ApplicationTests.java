@@ -3,8 +3,8 @@ package com.example.labwork1;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.example.labwork1.controller.CalculationController;
-import com.example.labwork1.controller.CustomException;
-import org.junit.jupiter.api.Test;
+import com.example.labwork1.exception.CustomException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -29,6 +29,8 @@ class Labwork1ApplicationTests {
         int expected = 12;
 
         assertEquals(expected, result);
+
+
     }
 
     @Test
