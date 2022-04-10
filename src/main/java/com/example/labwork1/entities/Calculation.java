@@ -3,7 +3,7 @@ package com.example.labwork1.entities;
 
 import com.example.labwork1.SpringConfig;
 import com.example.labwork1.cache.CalculationCache;
-import com.example.labwork1.logger.Logger;
+import com.example.labwork1.logger.MyLogger;
 import org.apache.logging.log4j.Level;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -18,6 +18,7 @@ public class Calculation {
     public Calculation(CalculationParametres params) {
         var context = new AnnotationConfigApplicationContext(SpringConfig.class);
         cache = context.getBean("cache", CalculationCache.class);
+        System.out.println(200);
         context.close();
 
         this.inputParams = params;
@@ -27,7 +28,7 @@ public class Calculation {
 
         var temp = cache.find(inputParams);
         if (temp != null) {
-            Logger.log(Level.INFO, "Value found in cache!");
+            MyLogger.log(Level.INFO, "Value found in cache!");
             setRoot(temp);
 
             return;

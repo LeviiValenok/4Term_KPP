@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Level;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.example.labwork1.logger.Logger;
+import com.example.labwork1.logger.MyLogger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +17,7 @@ public class CalculationCache {
     public void add(@NotNull CalculationParametres params, @NotNull Integer root) {
         if (!solutions.containsKey(params)) {
             solutions.put(params, root);
-            Logger.log(Level.INFO, "Value " + params + "@" + root + " added to cache!");
+            MyLogger.log(Level.INFO, "Value " + params + "@" + root + " added to cache!");
         }
     }
 
@@ -25,7 +25,7 @@ public class CalculationCache {
         if (solutions.containsKey(params))
             return solutions.get(params);
 
-        Logger.log(Level.WARN, "Value " + params + " was not found in cache!");
+        MyLogger.log(Level.WARN, "Value " + params + " was not found in cache!");
         return null;
     }
 
