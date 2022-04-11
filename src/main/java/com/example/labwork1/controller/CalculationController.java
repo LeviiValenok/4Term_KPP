@@ -1,6 +1,6 @@
 package com.example.labwork1.controller;
 
-import com.example.labwork1.controller.RequestCounterController;
+import com.example.labwork1.counter.RequestCounter;
 import com.example.labwork1.cache.CalculationCache;
 import com.example.labwork1.entities.CalculationParametres;
 import com.example.labwork1.validation.InputValidation;
@@ -17,8 +17,10 @@ import com.example.labwork1.exception.CustomException;
 @RestController
 
 public class CalculationController {
-    RequestCounterController calls = new RequestCounterController();
-    InputValidation validation = new InputValidation();
+
+   // RequestCounterController calls = new RequestCounterController();
+    RequestCounter requestCounter = new RequestCounter();
+   // InputValidation validation = new InputValidation();
    @GetMapping("/simplecalculation")
    public ResponseEntity<Object> simpleCalculation (@RequestParam (value = "resultNumber", defaultValue = "0")String resultNumber,
                                   @RequestParam (value = "firstOption", defaultValue = "0") String firstOption,
@@ -35,7 +37,8 @@ public class CalculationController {
        InputValidation.optionsValidation(firstOption, secondOption, thirdOption, fourthOption);
        var calculation = new Calculation(new CalculationParametres(Integer.parseInt(resultNumber), Integer.parseInt(firstOption),
                Integer.parseInt(secondOption), Integer.parseInt(thirdOption), Integer.parseInt(fourthOption)));
-       calls.increasingCalls();
+
+       requestCounter.increment();
        calculation.calculateRoot();
 
        return new ResponseEntity<>(calculation.getRoot(), HttpStatus.OK);
