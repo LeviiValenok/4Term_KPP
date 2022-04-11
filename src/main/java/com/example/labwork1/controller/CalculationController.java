@@ -20,7 +20,7 @@ public class CalculationController {
 
    // RequestCounterController calls = new RequestCounterController();
     RequestCounter requestCounter = new RequestCounter();
-   // InputValidation validation = new InputValidation();
+   InputValidation validation = new InputValidation();
    @GetMapping("/simplecalculation")
    public ResponseEntity<Object> simpleCalculation (@RequestParam (value = "resultNumber", defaultValue = "0")String resultNumber,
                                   @RequestParam (value = "firstOption", defaultValue = "0") String firstOption,
