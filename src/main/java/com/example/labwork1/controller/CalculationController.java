@@ -6,6 +6,7 @@ import com.example.labwork1.entities.CalculationParametres;
 import com.example.labwork1.validation.InputValidation;
 import com.example.labwork1.entities.Calculation;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.labwork1.entities.CalculationAdditionalLogic;
@@ -49,26 +50,13 @@ public class CalculationController {
        return new ResponseEntity<>(calculation.getRoot(), HttpStatus.OK);
    }
 
-    @PostMapping("/calculator")
-    public ResponseEntity<?> calculateBulkParams(@RequestBody List<CalculationParametres> bodyList) {
-
-        List<Integer> resultList = new LinkedList<>();
-        bodyList.forEach((currentElement) -> {
-            try {
-                var calculation = new Calculation(currentElement);
-                calculation.calculateRoot();
-                resultList.add(calculation.getRoot());
-            } catch (CustomException e) {
-                logger.error("Error in postMapping");
-            }
-        });
-        CalculationAdditionalLogic calculatorLogic = new CalculationAdditionalLogic();
-        logger.info("Successfully postMapping");
-        int sumResult = calculatorLogic.calculateSumOfResult(resultList);
-
-
-        return new ResponseEntity<>(resultList + "\nSum: " + sumResult,  HttpStatus.OK);
-
+    @PostMapping(value = "/calculation",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity filter(@RequestBody String[] arr) {
+       logger.info("post mappping is successful");
+       CalculationAdditionalLogic calculationAdditionalLogic = new CalculationAdditionalLogic() ;
+       return ResponseEntity.ok(calculationAdditionalLogic.calculateSumOfResult(arr));
     }
 
     @GetMapping("/cache")

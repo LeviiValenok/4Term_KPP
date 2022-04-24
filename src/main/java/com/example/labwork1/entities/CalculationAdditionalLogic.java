@@ -1,13 +1,14 @@
 package com.example.labwork1.entities;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class CalculationAdditionalLogic {
-    public int calculateSumOfResult(List<Integer> resultList) {
+    public int calculateSumOfResult(String[] arr) {
         int sum = 0;
-        if (!resultList.isEmpty()) {
-            sum = resultList.stream().mapToInt(Integer::intValue).sum();
-        }
+
+            sum = Stream.of(arr).mapToInt(Integer::parseInt).sum();
+
         return sum;
     }
 
