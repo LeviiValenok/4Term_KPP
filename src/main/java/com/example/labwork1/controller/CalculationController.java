@@ -53,10 +53,12 @@ public class CalculationController {
     @PostMapping(value = "/calculation",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity filter(@RequestBody String[] arr) {
+    public ResponseEntity<Object> sum(@RequestBody String[] arr) {
+
        logger.info("post mappping is successful");
        CalculationAdditionalLogic calculationAdditionalLogic = new CalculationAdditionalLogic() ;
-       return ResponseEntity.ok(calculationAdditionalLogic.calculateSumOfResult(arr));
+       return new ResponseEntity<>("Sum: " + calculationAdditionalLogic.calculateSumOfResult(arr) + "\nSum of parametres: " +
+               calculationAdditionalLogic.SumOfParametres(arr), HttpStatus.OK);
     }
 
     @GetMapping("/cache")
