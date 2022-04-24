@@ -7,11 +7,15 @@ import com.example.labwork1.validation.InputValidation;
 import com.example.labwork1.entities.Calculation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import com.example.labwork1.entities.CalculationAdditionalLogic;
 
 import com.example.labwork1.exception.CustomException;
+
+import java.util.LinkedList;
+import java.util.List;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 
 @RestController
@@ -21,6 +25,7 @@ public class CalculationController {
    // RequestCounterController calls = new RequestCounterController();
     RequestCounter requestCounter = new RequestCounter();
    InputValidation validation = new InputValidation();
+   private static final Logger logger = LogManager.getLogger(CalculationController.class);
    @GetMapping("/simplecalculation")
    public ResponseEntity<Object> simpleCalculation (@RequestParam (value = "resultNumber", defaultValue = "0")String resultNumber,
                                   @RequestParam (value = "firstOption", defaultValue = "0") String firstOption,
@@ -43,6 +48,28 @@ public class CalculationController {
 
        return new ResponseEntity<>(calculation.getRoot(), HttpStatus.OK);
    }
+
+    @PostMapping("/calculator")
+    public ResponseEntity<?> calculateBulkParams(@RequestBody List<CalculationParametres> bodyList) {
+
+        List<Integer> resultList = new LinkedList<>();
+        bodyList.forEach((currentElement) -> {
+            try {
+                var calculation = new Calculation(currentElement);
+                calculation.calculateRoot();
+                resultList.add(calculation.getRoot());
+            } catch (CustomException e) {
+                logger.error("Error in postMapping");
+            }
+        });
+        CalculationAdditionalLogic calculatorLogic = new CalculationAdditionalLogic();
+        logger.info("Successfully postMapping");
+        int sumResult = calculatorLogic.calculateSumOfResult(resultList);
+
+
+        return new ResponseEntity<>(resultList + "\nSum: " + sumResult,  HttpStatus.OK);
+
+    }
 
     @GetMapping("/cache")
     public ResponseEntity<String> printCache() {

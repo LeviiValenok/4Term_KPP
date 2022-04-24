@@ -7,6 +7,8 @@ import com.example.labwork1.logger.MyLogger;
 import org.apache.logging.log4j.Level;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.List;
+
 public class Calculation {
 
     private final CalculationCache cache;
@@ -49,5 +51,6 @@ public class Calculation {
     public void setRoot( Integer root) {
         this.root = root;
     }
+
 
 }
